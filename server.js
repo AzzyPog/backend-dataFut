@@ -20,6 +20,15 @@ app.get('/campeonato', async (req, res) => {
   }
 });
 
+app.get('/jogador/gols', async (req, res) => {
+  try {
+    const [rows] = await database.query(queries.jogador.listarJogadoresPorGols);
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro no retorno da query' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`server -> http://localhost:${port}`);
 });
