@@ -29,6 +29,42 @@ app.get('/jogador/gols', async (req, res) => {
   }
 });
 
+app.get('/gols/tempo', async (req, res) => {
+  try {
+    const [rows] = await database.query(queries.gol.listarGolsPorTempo);
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro no retorno da query' });
+  }
+});
+
+app.get('/estadios/campeonato/brasil', async (req, res) => {
+  try {
+    const [rows] = await database.query(queries.estadio.listarEstadiosPorCampeonatoBr);
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro no retorno da query' });
+  }
+});
+
+app.get('/jogadores/substituicao', async (req, res) => {
+  try {
+    const [rows] = await database.query(queries.jogador.listarJogadoresComMaisSubstituicao);
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro no retorno da query' });
+  }
+});
+
+app.get('/partida/gols', async (req, res) => {
+  try {
+    const [rows] = await database.query(queries.partida.listarPartidasGols);
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro no retorno da query' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`server -> http://localhost:${port}`);
 });
