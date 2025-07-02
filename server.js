@@ -9,8 +9,6 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-
-
 app.get('/campeonato', async (req, res) => {
   try {
     const [rows] = await database.query(queries.campeonato.listarCampeonatos);
@@ -40,7 +38,9 @@ app.get('/gols/tempo', async (req, res) => {
 
 app.get('/estadios/campeonato/brasil', async (req, res) => {
   try {
-    const [rows] = await database.query(queries.estadio.listarEstadiosPorCampeonatoBr);
+    const [rows] = await database.query(
+      queries.estadio.listarEstadiosPorCampeonatoBr
+    );
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: 'Erro no retorno da query' });
@@ -49,7 +49,9 @@ app.get('/estadios/campeonato/brasil', async (req, res) => {
 
 app.get('/jogadores/substituicao', async (req, res) => {
   try {
-    const [rows] = await database.query(queries.jogador.listarJogadoresComMaisSubstituicao);
+    const [rows] = await database.query(
+      queries.jogador.listarJogadoresComMaisSubstituicao
+    );
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: 'Erro no retorno da query' });
@@ -59,6 +61,19 @@ app.get('/jogadores/substituicao', async (req, res) => {
 app.get('/partida/gols', async (req, res) => {
   try {
     const [rows] = await database.query(queries.partida.listarPartidasGols);
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro no retorno da query' });
+  }
+});
+
+app.get('/partida/gols/:timeNome', async (req, res) => {
+  try {
+    const timeNome = req.params.timeNome;
+    const [rows] = await database.query(
+      queries.partida.listarPartidasGolsTime,
+      [timeNome, timeNome]
+    );
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: 'Erro no retorno da query' });
